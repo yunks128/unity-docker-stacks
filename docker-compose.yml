@@ -1,0 +1,9 @@
+# ${DOCKER_GROUP} and ${DOCKER_TAG} default values defined in the .env file 
+version: '3'
+services:
+    sounder_sips_dev:
+        image: ${DOCKER_GROUP}/sounder_sips_dev:${DOCKER_TAG}
+        hostname: local
+        build:
+            context: sounder_sips_dev
+            dockerfile: $PWD/sounder_sips_dev/Dockerfile
