@@ -4,18 +4,21 @@
 # 
 tar zxf $SOURCES_PATH/hdf5-1.8.19.tar.gz
 cd hdf5-1.8.19
+
+export CC="$GCC_PATH/bin/gcc"
+export CFLAGS="-m64 -fPIC -pthread -s -mcmodel=large -Wall -Wno-unused-variable -Wmissing-prototypes -Wmissing-declarations -m128bit-long-double -mlarge-data-threshold=90000000"
+export LDFLAGS="-m64 -pthread -fPIC -Wl,-Map,hdf5-1.8.19.map"
+export CXX="$GCC_PATH/bin/g++"
+export CPP="$GCC_PATH/bin/g++ -E"
+export FC="$GCC_PATH/bin/gfortran"
+export FFLAGS="-m64 -fPIC -pthread -s -ffixed-line-length-132 -mcmodel=large -fdec-structure -fdec -mlarge-data-threshold=90000000" 
+
 ./configure --prefix="$INSTALL_PREFIX/hdf5-1.8.19" \
 --with-zlib=$INSTALL_PREFIX/zlib-1.2.11 \
 --with-szlib=$INSTALL_PREFIX/szip-2.1.1 \
 --enable-cxx \
---enable-fortran \
-CC="$GCC_PATH/bin/gcc" \
-CFLAGS="-m64 -fPIC -pthread -s -mcmodel=large -Wall -Wno-unused-variable -Wmissing-prototypes -Wmissing-declarations -m128bit-long-double -mlarge-data-threshold=90000000" \
-LDFLAGS="-m64 -pthread -fPIC -Wl,-Map,hdf5-1.8.19.map" \
-CXX="$GCC_PATH/bin/g++" \
-CPP="$GCC_PATH/bin/g++ -E" \
-F77="$GCC_PATH/bin/gfortran" \
-FFLAGS="-m64 -fPIC -pthread -s -ffixed-line-length-132 -mcmodel=large -fdec-structure -fdec -mlarge-data-threshold=90000000" 
+--enable-fortran
+
 make -j $NUM_COMPILE_JOBS
 make install
 echo
