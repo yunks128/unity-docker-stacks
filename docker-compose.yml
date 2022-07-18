@@ -5,5 +5,5 @@ services:
         image: ${DOCKER_GROUP}/sounder_sips_dev:${DOCKER_TAG}
         hostname: local
         build:
-            context: sounder_sips_dev
+            context: sounder_sips_dev/
             dockerfile: $PWD/sounder_sips_dev/Dockerfile
