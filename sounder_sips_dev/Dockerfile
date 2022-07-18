@@ -20,10 +20,17 @@ USER root
 # Install development tools, system dependencies
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
-      # Base packages
-      git \
-      wget \
-      build-essential \
+      # Base utilities
+      git file wget less tzdata unzip \
+      vim-tiny nano-tiny \
+      openssh-client \
+      # Build tools
+      build-essential bison flex cmake \
+      # Inkscape is installed to be able to convert SVG files
+      inkscape \
+      # nbconvert dependencies
+      # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
+      texlive-xetex texlive-fonts-recommended texlive-plain-generic \
       # libturbojpeg0-dev is used by hdf4 library instead of the installed jpeg-9b version
       # Even though boost is installed into /opt/packages, some of the SIPS PGEs use a system wide version
       libturbojpeg0-dev \
@@ -31,6 +38,7 @@ RUN apt-get update --yes && \
       python3-netcdf4 \
       # For use in GCC compile
       libgmp-dev libmpfi-dev libmpc-dev \
+      # Needed by HDF4 library
       # Needed by HDFEOS2 library
       ksh \
       # Needed by netcdf libraries
@@ -38,10 +46,13 @@ RUN apt-get update --yes && \
       # Needed by SDPTK library
       csh \
       # Needed by g2clib      
-      libpng-dev \
-      # Needed by LAPACK
-      cmake
-      
+      libpng-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Create alternative for nano -> nano-tiny, vim -> vim-tiny
+RUN update-alternatives --install /usr/bin/nano nano /bin/nano-tiny 10 && \
+    update-alternatives --install /usr/bin/vim vim /bin/vim.tiny 10
+
 # Copy files
 COPY sources $SOURCES_PATH
 COPY scripts $SCRIPTS_PATH
@@ -182,3 +193,6 @@ RUN $SCRIPTS_PATH/libgeotiff-1.4.0.sh
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
+
+# Reset to original WORKDIR
+WORKDIR "${HOME}"
