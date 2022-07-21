@@ -52,6 +52,7 @@ RUN $SCRIPTS_PATH/build_all.sh
 FROM jupyter/base-notebook
 
 ARG PACKAGES_DIR=/opt/packages
+ARG GCC_PATH=/opt/gcc/gcc-8.2.0
 
 LABEL maintainer="Unity ADS"
 
@@ -60,6 +61,7 @@ LABEL maintainer="Unity ADS"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Copy over packages built in first stage
+COPY --from=builder $GCC_PATH $GCC_PATH
 COPY --from=builder $PACKAGES_DIR $PACKAGES_DIR
 
 USER root
