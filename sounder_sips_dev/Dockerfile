@@ -22,7 +22,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
       # Build tools
-      build-essential file bison flex cmake \
+      build-essential file bison flex cmake python2 unzip less \
       # libturbojpeg0-dev is used by hdf4 library instead of the installed jpeg-9b version
       # Even though boost is installed into /opt/packages, some of the SIPS PGEs use a system wide version
       libturbojpeg0-dev libboost-dev python3-netcdf4 \

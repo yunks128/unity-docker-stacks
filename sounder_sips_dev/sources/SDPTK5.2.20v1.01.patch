@@ -1,0 +1,12 @@
+diff -ur TOOLKIT.orig/src/AA/VPF/vvmisc.c TOOLKIT.new/src/AA/VPF/vvmisc.c
+--- TOOLKIT.orig/src/AA/VPF/vvmisc.c	2009-01-06 08:13:10.000000000 -0800
++++ TOOLKIT.new/src/AA/VPF/vvmisc.c	2022-07-25 12:24:13.155703409 -0700
+@@ -59,7 +59,7 @@
+ #if (defined(CYGWIN) )
+ #include <regex.h>
+ #else
+-#include <regexp.h>
++#include <regex.h>
+ #endif
+ #endif
+ 

@@ -6,9 +6,13 @@
 # fix PGSHOME in $INSTALL_PREFIX/sdptk5.2.20v1.01/TOOLKIT/bin/linux/pgs-env.csh
 # confirm with nm $INSTALL_PREFIX/sdptk5.2.20v1.01/TOOLKIT/lib/linux64/libPGSTK.a | grep PGS_EPH_getToken
 #
+
 mkdir -p $INSTALL_PREFIX/sdptk5.2.20v1.01/TOOLKIT
 tar zxf $SOURCES_PATH/SDPTK5.2.20v1.01.tar.Z
 cd TOOLKIT
+
+patch -p1 <$SOURCES_PATH/SDPTK5.2.20v1.01.patch
+
 ./bin/INSTALL \
 -pgshome "$INSTALL_PREFIX/sdptk5.2.20v1.01/TOOLKIT" \
 -log sdptk.log \
@@ -24,5 +28,6 @@ cd TOOLKIT
 -cpp_flags "-m64 -fPIC -pthread -s -m128bit-long-double -mcmodel=large -mlarge-data-threshold=90000000 -I$INSTALL_PREFIX/zlib-1.2.11/include" \
 -fc_flags "-ff2c -m64 -fPIC -pthread -s -m128bit-long-double -fdec-structure -fdec -mcmodel=large -mlarge-data-threshold=90000000" \
 -c_rlib < $SCRIPTS_PATH/sdptk5.2.20v1.01.txt
+
 cd ..
 cp -a TOOLKIT $INSTALL_PREFIX/sdptk5.2.20v1.01
