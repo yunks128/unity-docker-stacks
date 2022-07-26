@@ -90,8 +90,8 @@ RUN apt-get update --yes && \
       libcurl4 \
       # Needed by SDPTK library
       csh \
-      # Needed by g2clib      
-      libpng16-16 && \
+      # Needed by g2clib and SPSS software, contains the static library as well
+      libpng-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create alternative for nano -> nano-tiny, vim -> vim-tiny
