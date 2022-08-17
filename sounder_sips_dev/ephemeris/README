@@ -1,0 +1,17 @@
+This file needs to be updated for every updates to leap seconds.
+
+This file is sourced for the Sounder SIPS systems at:
+smog.jpl.nasa.gov:/opt/packages/sdptk5.2.20v1.01/TOOLKIT/database/common/TD/leapsec.dat
+
+This file is downloaded from a modified version of this script:
+/opt/packages/sdptk5.2.20v1.01/TOOLKIT/bin/linux64/update_leapsec.sh
+from:
+https://cddis.nasa.gov/archive/products/iers/tai-utc.dat
+which requires NASA Earthdata credentials. The TOOLKIT version of this script points
+to an old deprecated location.
+
+Our copy of the leapsec.dat file has been modified to be valid far into the future so as to not
+require frequent updates. The toolkit currently thinks a leapsec.dat file is invalid if the
+header indicates it is older than a time period of what seems to be about 80 days. The purposes
+of this modification is to keep applications running without requring frequent updates even
+if they might be slightly wrong outputs.

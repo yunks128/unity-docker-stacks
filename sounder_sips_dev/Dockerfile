@@ -56,6 +56,8 @@ ARG GCC_PATH=/opt/gcc/gcc-8.2.0
 
 LABEL maintainer="Unity ADS"
 
+USER root
+
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -64,7 +66,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY --from=builder $GCC_PATH $GCC_PATH
 COPY --from=builder $PACKAGES_DIR $PACKAGES_DIR
 
-USER root
+# Update leap seconds file and UTC file with versions that facilitate development without the
+# need for constant updates.
+COPY ephemeris/leapsec.dat /opt/packages/sdptk5.2.20v1.01/TOOLKIT/database/common/TD/leapsec.dat
+COPY ephemeris/utcpole.dat /opt/packages/sdptk5.2.20v1.01/TOOLKIT/database/common/CSC/utcpole.dat
 
 # Install tools and dependencies
 ENV DEBIAN_FRONTEND noninteractive
