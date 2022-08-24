@@ -96,7 +96,11 @@ RUN apt-get update --yes && \
       # Needed by SDPTK library
       csh \
       # Needed by g2clib and SPSS software, contains the static library as well
-      libpng-dev && \
+      libpng-dev \
+      # Set up papermill
+      python3-pip && \
+      pip3 install -U pip && \
+      pip3 install papermill && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create alternative for nano -> nano-tiny, vim -> vim-tiny
