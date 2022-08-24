@@ -76,7 +76,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
       # Base utilities
-      git file wget less tzdata unzip \
+      git git-lfs file wget less tzdata unzip \
       vim-tiny nano-tiny \
       openssh-client \
       # Build tools
