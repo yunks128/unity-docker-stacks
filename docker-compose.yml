@@ -7,3 +7,9 @@ services:
         build:
             context: sounder_sips_dev/
             dockerfile: $PWD/sounder_sips_dev/Dockerfile
+    unity_datascience:
+        image: ${DOCKER_GROUP}/datascience:${DOCKER_TAG}
+        hostname: local
+        build:
+            context: unity_datascience
+            dockerfile: $PWD/unity_datascience/Dockerfile
