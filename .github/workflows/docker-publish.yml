@@ -27,6 +27,7 @@ jobs:
       id-token: write
 
     strategy:
+      fail-fast: false
       matrix:
         context:
           - sounder_sips_dev
@@ -35,6 +36,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          lfs: true
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
