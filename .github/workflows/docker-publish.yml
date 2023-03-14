@@ -27,7 +27,7 @@ jobs:
       # Expose matched filters as job 'stacks' output variable
       stacks: ${{ steps.filter.outputs.changes }}
     steps:
-    # For pull requests it's not necessary to checkout the code
+    - uses: actions/checkout@v3
     - uses: dorny/paths-filter@v2
       id: filter
       with:
