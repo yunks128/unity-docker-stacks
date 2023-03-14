@@ -16,6 +16,28 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
+
+  # JOB to run change detection
+  changes:
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    outputs:
+      # Expose matched filters as job 'stacks' output variable
+      stacks: ${{ steps.filter.outputs.changes }}
+    steps:
+    # For pull requests it's not necessary to checkout the code
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+	# Modify the list of Stacks here as they are added
+	# Note that sounder_sips_dev is left out because it takes a large amount of resources to run
+	#
+	# In the filters below, the key should be the same as the directory name of the Stack
+        filters: |
+          unity_datascience: unity_datascience
+
   build:
 
     runs-on: ubuntu-latest
@@ -29,9 +51,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        context:
-          - sounder_sips_dev
-          - unity_datascience
+        # Parse JSON array containing names of all filters matching any of changed files
+        # e.g. ['package1', 'package2'] if both package folders contains changes
+        stack: ${{ fromJSON(needs.changes.outputs.stacks) }}
 
     steps:
       - name: Checkout repository
@@ -68,7 +90,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.context }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.stack }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -76,7 +98,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
-          context: ${{ matrix.context }}
+          context: ${{ matrix.stack }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
