@@ -31,10 +31,10 @@ jobs:
     - uses: dorny/paths-filter@v2
       id: filter
       with:
-	# Modify the list of Stacks here as they are added
-	# Note that sounder_sips_dev is left out because it takes a large amount of resources to run
-	#
-	# In the filters below, the key should be the same as the directory name of the Stack
+        # Modify the list of Stacks here as they are added
+        # Note that sounder_sips_dev is left out because it takes a large amount of resources to run
+        #
+        # In the filters below, the key should be the same as the directory name of the Stack
         filters: |
           unity_datascience: unity_datascience
 
