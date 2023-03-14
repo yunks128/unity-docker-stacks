@@ -49,6 +49,7 @@ jobs:
       id-token: write
 
     needs: changes
+    if: ${{ needs.changes.outputs.stacks != '[]' }}
     strategy:
       fail-fast: false
       matrix:
