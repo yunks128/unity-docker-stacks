@@ -48,6 +48,7 @@ jobs:
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
 
+    needs: changes
     strategy:
       fail-fast: false
       matrix:
