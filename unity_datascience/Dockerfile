@@ -21,3 +21,4 @@ RUN pip install unity_sds_client podaac-data-subscriber
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
+
