@@ -15,8 +15,9 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli && \
     rm -rf awscliv2.zip aws
 
-RUN conda install nb_conda_kernels ipykernel
-RUN pip install unity_sds_client
+RUN mamba install -y nb_conda_kernels ipykernel s3fs boto3 netcdf4 xarray && \
+    conda clean -y --all
+RUN pip install unity_sds_client podaac-data-subscriber
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
