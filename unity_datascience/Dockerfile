@@ -15,7 +15,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli && \
     rm -rf awscliv2.zip aws
 
-RUN mamba install -y nb_conda_kernels ipykernel s3fs boto3 netcdf4 xarray basemap cartopy && \
+RUN mamba install -y nb_conda_kernels ipykernel s3fs boto3 netcdf4 xarray basemap cartopy h5netcdf 'basemap>=1.4.0' && \
     conda clean -y --all
 RUN pip install unity_sds_client podaac-data-subscriber
 
