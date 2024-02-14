@@ -41,6 +41,8 @@ jobs:
         filters: |
           unity_datascience: 
             - 'unity_datascience/**'
+            - '.github/workflows/**'
+            - '.env'
 
   build:
 
