@@ -43,7 +43,6 @@ jobs:
             - 'unity_datascience/**'
             - '.github/workflows/**'
             - '.env'
-
   build:
 
     runs-on: ubuntu-latest
@@ -64,6 +63,11 @@ jobs:
         stack: ${{ fromJSON(needs.changes.outputs.stacks) }}
 
     steps:
+
+      - name: DotEnv file
+        id: dotenv
+        uses: ./.github/actions/dotenv-action
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -108,7 +112,9 @@ jobs:
         with:
           context: ${{ matrix.stack }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags:
+            - ${{ steps.meta.outputs.tags }}
+            - ${{ steps.dotenv.outputs.docker_tag }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
