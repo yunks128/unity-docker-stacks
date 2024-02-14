@@ -103,6 +103,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.stack }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}},value=${{ steps.dotenv.outputs.docker_tag }}
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -112,9 +116,7 @@ jobs:
         with:
           context: ${{ matrix.stack }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags:
-            - ${{ steps.meta.outputs.tags }}
-            - ${{ steps.dotenv.outputs.docker_tag }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
