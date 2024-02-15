@@ -64,14 +64,14 @@ jobs:
 
     steps:
 
-      - name: DotEnv file
-        id: dotenv
-        uses: xom9ikk/dotenv@v2
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           lfs: true
+
+      - name: DotEnv file
+        id: dotenv
+        uses: xom9ikk/dotenv@v2
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
