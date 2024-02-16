@@ -3,6 +3,9 @@ FROM jupyter/datascience-notebook
 # Switch to root user for build
 USER root
 
+# Requires the build context to be one level up where common is located
+COPY common/unity-sds /etc/unity-sds
+
 # Install Dockstore
 RUN apt-get update -q && \
     apt install -y openjdk-11-jdk && \

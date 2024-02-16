@@ -11,5 +11,5 @@ services:
         image: ${DOCKER_GROUP}/datascience:${DOCKER_TAG}
         hostname: local
         build:
-            context: unity_datascience
+            context: ./
             dockerfile: $PWD/unity_datascience/Dockerfile

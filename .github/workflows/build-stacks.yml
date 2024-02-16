@@ -38,6 +38,8 @@ jobs:
         # Note that sounder_sips_dev is left out because it takes a large amount of resources to run
         #
         # In the filters below, the key should be the same as the directory name of the Stack
+        # Additionally, the Dockerfile in the stack directory should work from the root context
+        # to allow inclusion of common files
         filters: |
           unity_datascience: 
             - 'unity_datascience/**'
@@ -114,7 +116,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: ${{ matrix.stack }}
+          file: ${{ matrix.stack }}/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
